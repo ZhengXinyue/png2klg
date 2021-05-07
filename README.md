@@ -51,7 +51,7 @@ You can also directly use the `data.klg`(only 50 frames) for test.
 
 The most import thing when saving depth images is:
 
-`depth_image = cv2.resize((depth_image / 1000).astype(np.uint16), (640, 480))`.  To convert depth from m to mm, I don't know why this, but it works.
+`depth_image = cv2.resize((depth_image * depth_scale).astype(np.uint16), (640, 480))`.  To convert depth from m to mm, I don't know why this, but it works.
 
 You can refer to https://github.com/carlosbeltran/klgparser/issues/1(My issue) to get more details.
 
