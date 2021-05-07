@@ -3,9 +3,16 @@ import pyrealsense2 as rs
 # Import Numpy for easy array manipulation
 import numpy as np
 # Import OpenCV for easy image rendering
+import sys
+try:
+    sys.path.remove('/opt/ros/kinetic/lib/python2.7/dist-packages')
+except:
+    pass
 import cv2
+import time
 import os
 import shutil
+import zlib
 
 # Create a pipeline
 pipeline = rs.pipeline()
@@ -84,11 +91,16 @@ try:
         if not aligned_depth_frame or not color_frame:
             continue
 
-        depth_image = np.asanyarray(aligned_depth_frame.get_data())
-        color_image = cv2.cvtColor(np.asanyarray(color_frame.get_data()), cv2.COLOR_RGB2BGR)
-        color_image = cv2.resize(color_image, (640, 480))
-        depth_image = cv2.resize((depth_image / 1000).astype(np.uint16), (640, 480))  # must be this
+        depth_image = np.asanyarray(aligned_depth_frame.get_data()).astype(np.float32)
+        cv2.namedWindow('Depth Image', cv2.WINDOW_NORMAL)
+        cv2.imshow('Depth Image', depth_image)
+        color_image = np.asanyarray(color_frame.get_data())
+        cv2.namedWindow('Color Image', cv2.WINDOW_NORMAL)
+        cv2.imshow('Color Image', color_image)
 
+        color_image = cv2.cvtColor(color_image, cv2.COLOR_RGB2BGR)
+        color_image = cv2.resize(color_image, (640, 480))
+        depth_image = cv2.resize((depth_image * depth_scale).astype(np.uint16), (640, 480))  # must be this
         cv2.imwrite(rgb_path + '/rgb_{0:010d}.png'.format(count), color_image)
         cv2.imwrite(depth_path + '/depth_{0:010d}.png'.format(count), depth_image)
         f.write(str(count) + '\n')
@@ -105,10 +117,7 @@ try:
         images = np.hstack((bg_removed, depth_colormap))
         cv2.namedWindow('All', cv2.WINDOW_NORMAL)
         cv2.imshow('All', images)
-        cv2.namedWindow('Color Image', cv2.WINDOW_NORMAL)
-        cv2.imshow('Color Image', color_image)
-        cv2.namedWindow('Depth Image', cv2.WINDOW_NORMAL)
-        cv2.imshow('Depth Image', depth_image)
+
         key = cv2.waitKey(1)
         # Press esc or 'q' to close the image window
         if key & 0xFF == ord('q') or key == 27:
