@@ -53,7 +53,7 @@ The most import thing when saving depth images is:
 
 `depth_image = cv2.resize((depth_image * depth_scale).astype(np.uint16), (640, 480))`.  To convert depth from m to mm, I don't know why this, but it works.
 
-You can refer to https://github.com/carlosbeltran/klgparser/issues/1(My issue) to get more details.
+You can refer to https://github.com/carlosbeltran/klgparser/issues/1 (My issue) to get more details.
 
 ## About Ros(My lab is using ros, so I also want to get .klg file from .bag file):
 I didn't write the bag2klg code.
