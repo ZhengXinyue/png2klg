@@ -39,6 +39,8 @@ python main.py --depth_path=test/depth --rgb_path=test/rgb
 
 If you want to make it work simultaneously with realsense, refer to https://github.com/mp3guy/ElasticFusion/issues/164(I failed with realsense camera L515)
 
+(New: I succeeded with realsense D534i. It works simultaneously with ElasticFusion and the result seems fine.)
+
 ## About Realsense(I believe you have already made the camera work)(My camera is L515):
 You can refer to https://github.com/IntelRealSense/librealsense/blob/master/wrappers/python/examples/align-depth2color.py to get aligned color images and depth images.
 I made some changes, you can use command `python get_camera.py` to get aligned images. 
@@ -51,7 +53,11 @@ You can also directly use the `data.klg`(only 50 frames) for test.
 
 The most import thing when saving depth images is:
 
-`depth_image = cv2.resize((depth_image * depth_scale).astype(np.uint16), (640, 480))`.  To convert depth from m to mm, I don't know why this, but it works.
+`depth_image = cv2.resize((depth_image * depth_scale).astype(np.uint16), (640, 480))`.  To convert depth from m to mm, I don't know why this, but it works(not really...).
+
+### Update:
+I have tested with this code above, but seems not work. I really don't know what 'depth scale' this algorithm uses.
+
 
 You can refer to https://github.com/carlosbeltran/klgparser/issues/1 (My issue) to get more details.
 
