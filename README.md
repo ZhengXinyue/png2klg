@@ -39,7 +39,7 @@ python main.py --depth_path=test/depth --rgb_path=test/rgb
 
 If you want to make it work simultaneously with realsense, refer to https://github.com/mp3guy/ElasticFusion/issues/164(I failed with realsense camera L515)
 
-(New: I succeeded with realsense D534i. It works simultaneously with ElasticFusion and the result seems fine.)
+(New: I succeeded with realsense D435i. It works simultaneously with ElasticFusion and the result seems fine.)
 
 ## About Realsense(I believe you have already made the camera work)(My camera is L515):
 You can refer to https://github.com/IntelRealSense/librealsense/blob/master/wrappers/python/examples/align-depth2color.py to get aligned color images and depth images.
